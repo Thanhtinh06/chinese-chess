@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ChessPiece from "../Chess/ChessPiece";
-import { ChessPieceType, Position } from "@/shared/global";
-import {
-  checkExistancePositonChess,
-  initBoardGame,
-} from "@/shared/components/Board";
+import { ChessPieceType, Position } from "./../../global";
+import { checkExistancePositonChess, initBoardGame } from "./index";
 
 const SquaresChess = () => {
   const [countSelect, setCountSelect] = useState<number>(0);
