@@ -1,50 +1,9 @@
 "use client";
 import React from "react";
-import DisplayBoard from "./BoardControll";
+import SquaresLine from "./SquaresLine";
+import SquaresChess from "./SquaresChess";
 
 const Board = () => {
-  const displayBoard = new DisplayBoard();
-  displayBoard.fillValue();
-  const renderGrid = () => {
-    return displayBoard.boardLine.map((ele) => {
-      return ele.map((e, index) => {
-        return (
-          <div
-            className="line"
-            style={{
-              border: "1px solid white",
-              width: "100%",
-              height: "100%",
-            }}
-            key={index}
-          >
-            {e}
-          </div>
-        );
-      });
-    });
-  };
-  const renderGridChess = () => {
-    return displayBoard.chessBoard.map((ele, i) => {
-      return ele.map((e, j) => {
-        return (
-          <button
-            style={{
-              border: "none",
-              color: "red",
-            }}
-            key={j}
-            onClick={() => {
-              console.log([i, j]);
-            }}
-          >
-            {e}
-          </button>
-        );
-      });
-    });
-  };
-
   return (
     <>
       <section
@@ -59,7 +18,7 @@ const Board = () => {
         }}
         className="board"
       >
-        {renderGrid()}
+        <SquaresLine />
         <div
           style={{
             display: "grid",
@@ -75,7 +34,7 @@ const Board = () => {
           }}
           className="board-chess"
         >
-          {renderGridChess()}
+          <SquaresChess />
         </div>
       </section>
     </>

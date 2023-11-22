@@ -30,15 +30,20 @@
       }
     ]
   },
-  "include": ["src/**/*.ts", ".next/types/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    ".next/types/**/*.ts",
+    "src/shared/components/Board/BoardControll.tsx"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
   ],
-  "baseUrl": ".",
+  "baseUrl": "./src",
   "paths": {
-    "@/*": ["./src/*"]
+    "@/shared/*": ["shared/*"],
+    "@/app/*": ["app/*"]
   },
   "exclude": ["node_modules"]
 }

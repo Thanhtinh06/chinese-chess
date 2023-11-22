@@ -21,104 +21,104 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-      }
-      
-      section.board div.line:nth-child(33) {
-        border: none !important;
-        border-left: 1px solid white !important;
-      }
-      
-      section.board div.line:nth-child(34) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(35) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(36) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(37) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(38) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(39) {
-        border: none !important;
-      }
-      
-      section.board div.line:nth-child(40) {
-        border: none !important;
-        border-right: 1px solid white !important;
-      }
-      
-      section.board div.line:nth-child(4),
-      div.line:nth-child(60) {
-        position: relative;
-        display: inline-block;
-      }
-      
-      section.board div.line:nth-child(4)::before,
-      div.line:nth-child(60)::before {
-        content: '';
-        position: absolute;
-        top: 48%;
-        left: -20%;
-        width: 110px;
-        height: 2px;
-        background-color: white;
-        transform: rotate(-135deg);
-        transform-origin: center;
-      }
-      
-      section.board div.line:nth-child(5),
-      div.line:nth-child(61) {
-        position: relative;
-        display: inline-block;
-      }
-      
-      section.board div.line:nth-child(5)::before,
-      div.line:nth-child(61)::before {
-        content: '';
-        position: absolute;
-        top: 48%;
-        left: -20%;
-        width: 110px;
-        height: 2px;
-        background-color: white;
-        transform: rotate(-45deg);
-        transform-origin: center;
-      }
-      
-      section.board div.line:nth-child(12),
-      div.line:nth-child(68) {
-        position: relative;
-        display: inline-block;
-      }
-      
-      section.board div.line:nth-child(12)::before,
-      div.line:nth-child(68)::before {
-        content: '';
-        position: absolute;
-        top: 48%;
-        left: -20%;
-        width: 110px;
-        height: 2px;
-        background-color: white;
-        transform: rotate(-45deg);
-        transform-origin: center;
-      }
-      
-      
-      section.board div.line:nth-child(13),
-      div:nth-child(69) {
-        position: relative;
-        display: inline-block;
+}
+
+section.board div.line:nth-child(33) {
+  border: none !important;
+  border-left: 1px solid white !important;
+}
+
+section.board div.line:nth-child(34) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(35) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(36) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(37) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(38) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(39) {
+  border: none !important;
+}
+
+section.board div.line:nth-child(40) {
+  border: none !important;
+  border-right: 1px solid white !important;
+}
+
+section.board div.line:nth-child(4),
+div.line:nth-child(60) {
+  position: relative;
+  display: inline-block;
+}
+
+section.board div.line:nth-child(4)::before,
+div.line:nth-child(60)::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: -20%;
+  width: 110px;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-135deg);
+  transform-origin: center;
+}
+
+section.board div.line:nth-child(5),
+div.line:nth-child(61) {
+  position: relative;
+  display: inline-block;
+}
+
+section.board div.line:nth-child(5)::before,
+div.line:nth-child(61)::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: -20%;
+  width: 110px;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+section.board div.line:nth-child(12),
+div.line:nth-child(68) {
+  position: relative;
+  display: inline-block;
+}
+
+section.board div.line:nth-child(12)::before,
+div.line:nth-child(68)::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: -20%;
+  width: 110px;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+
+section.board div.line:nth-child(13),
+div:nth-child(69) {
+  position: relative;
+  display: inline-block;
 }
 
 section.board div.line:nth-child(13)::before,
@@ -132,4 +132,51 @@ div.line:nth-child(69)::before {
   background-color: white;
   transform: rotate(-135deg);
   transform-origin: center;
+}
+.chess-piece {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 55px;
+  opacity: 95%;
+}
+
+
+.chess-piece:hover,
+.select-chess {
+  box-shadow: 2px 2px 2px rgb(212, 201, 201);
+  border: 1px groove white;
+  opacity: 100%;
+
+}
+
+.btn-chess {
+  border: none;
+  color: white;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-select-move {
+  position: relative;
+}
+
+.active-select-move::before {
+  width: 15px;
+  height: 15px;
+  content: '';
+  border-radius: 50%;
+  text-align: center;
+  line-height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: green;
+  z-index: 10;
+  display: block;
 }
