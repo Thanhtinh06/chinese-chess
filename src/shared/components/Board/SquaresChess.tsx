@@ -1,82 +1,92 @@
 import React, { useEffect, useState } from "react";
 import ChessPiece from "../Chess/ChessPiece";
-import { ChessPieceType, Position } from "./../../global";
-import { checkExistancePositonChess, initBoardGame } from "./index";
+import { ChessPieceType, Coordinate } from "./../../global";
+import {
+  checkExistenceCoordinateChess,
+  initBoardGame,
+  swapPositionChess,
+} from "./index";
 
 const SquaresChess = () => {
-  const [countSelect, setCountSelect] = useState<number>(0);
-  const [selectChess, setSelectChess] = useState<Position[]>([]);
-  const [positionMove, setPositionMove] = useState<Position[]>([]);
-  const [boardGame, setBoardGame] = useState<ChessPieceType[][]>([]);
+  const [selectedChessCoordinate, setSelectedChessCoordinate] =
+    useState<Coordinate | null>(null);
+  const [destinationCoordinate, setDestinationCoordinate] =
+    useState<Coordinate | null>(null);
+  const [board, setBoard] = useState<ChessPieceType[][]>([]);
 
   const resetSelection = (): void => {
-    setSelectChess([]);
-    setPositionMove([]);
+    setSelectedChessCoordinate(null);
+    setDestinationCoordinate(null);
   };
+
   useEffect(() => {
-    const initBoard = initBoardGame();
-    setBoardGame(initBoard);
+    const initialBoard = initBoardGame();
+    setBoard(initialBoard);
   }, []);
 
   useEffect(() => {
-    if (positionMove.length > 0 && selectChess.length > 0) {
-      const updatedBoardGame = [...boardGame]; // Create a copy of the state
-      const term = updatedBoardGame[positionMove[0][0]][positionMove[0][1]];
-      const currentSelectPositionChess =
-        updatedBoardGame[selectChess[0][0]][selectChess[0][1]];
-
-      // Swap the values correctly
-      updatedBoardGame[positionMove[0][0]][positionMove[0][1]] =
-        currentSelectPositionChess;
-      updatedBoardGame[selectChess[0][0]][selectChess[0][1]] = term;
-
-      setBoardGame(updatedBoardGame);
+    if (destinationCoordinate && selectedChessCoordinate) {
+      const updatedBoard = swapPositionChess(
+        board,
+        selectedChessCoordinate,
+        destinationCoordinate
+      );
+      setBoard(updatedBoard);
       resetSelection();
     }
-  }, [positionMove, selectChess]);
+  }, [destinationCoordinate, selectedChessCoordinate]);
 
-  useEffect(() => {
-    if (countSelect >= 2) {
-      setCountSelect(0);
-    }
-  }, [countSelect]);
+  const handleClick = (currentCoordinate: Coordinate): void => {
+    const isEmptySpace =
+      board[currentCoordinate.x][currentCoordinate.y].name === "" &&
+      !selectedChessCoordinate;
+    const isUnselected = checkExistenceCoordinateChess(
+      currentCoordinate,
+      selectedChessCoordinate
+    );
 
-  const handleClick = (i: number, j: number): void => {
-    if (countSelect < 1) {
-      setSelectChess([[i, j]]);
+    if (isUnselected) {
+      setSelectedChessCoordinate(null);
+    } else if (isEmptySpace) {
+      resetSelection();
     } else {
-      setPositionMove([[i, j]]);
-    }
-    setCountSelect((preCount) => preCount + 1);
-    if (checkExistancePositonChess(i, j, selectChess)) {
-      setSelectChess([]);
-      setCountSelect((preCount) => preCount - 1);
+      if (!selectedChessCoordinate) {
+        setSelectedChessCoordinate(currentCoordinate);
+      } else {
+        setDestinationCoordinate(currentCoordinate);
+      }
     }
   };
 
-  return boardGame.map((row, i) => {
+  return board.map((row, i) => {
     return row.map((piece, j) => {
+      const currentCoordinate: Coordinate = {
+        x: i,
+        y: j,
+      };
+
+      const isActiveMove = checkExistenceCoordinateChess(
+        currentCoordinate,
+        destinationCoordinate
+      );
+
       return (
         <button
-          className={`btn-chess ${
-            checkExistancePositonChess(i, j, positionMove)
-              ? "active-select-move"
-              : ""
-          }`}
+          className={`btn-chess ${isActiveMove ? "active-select-move" : ""}`}
           key={j}
-          onClick={() => handleClick(i, j)}
+          onClick={() => handleClick(currentCoordinate)}
         >
           {piece.isVisible && (
             <ChessPiece
               isVisible={piece.isVisible}
-              isCapturned={piece.isCapturned}
+              isCaptured={piece.isCaptured}
               name={piece.name}
               color={piece.color}
-              location={{
-                x: i,
-                y: j,
-              }}
-              isSelect={checkExistancePositonChess(i, j, selectChess)}
+              location={currentCoordinate}
+              isSelected={checkExistenceCoordinateChess(
+                currentCoordinate,
+                selectedChessCoordinate
+              )}
             />
           )}
         </button>

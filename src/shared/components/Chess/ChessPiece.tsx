@@ -5,10 +5,10 @@ type Props = {
   name: string;
   color: string;
   location?: Coordinate;
-  isCapturned?: boolean;
+  isCaptured?: boolean;
   isVisible: boolean;
   rule?: RuleChess;
-  isSelect?: boolean;
+  isSelected?: boolean;
 };
 
 const ChessPiece = (props: Props) => {
@@ -18,7 +18,7 @@ const ChessPiece = (props: Props) => {
       className={`${props.isVisible ? "" : "hidden"} ${
         props.name ? "chess-piece" : ""
       }
-        ${props.isSelect ? "select-chess" : ""}
+        ${props.isSelected ? "select-chess" : ""}
         `}
       style={{
         background: background,

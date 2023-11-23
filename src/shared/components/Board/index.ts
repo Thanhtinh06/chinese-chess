@@ -4,14 +4,16 @@ import {
   INITIAL_POSITIONS,
   ROWS,
 } from "../../constants/Board";
-import { ChessPieceType, Position } from "../../global";
+import { ChessPieceType, Coordinate } from "../../global";
 
-export const checkExistancePositonChess = (
-  i: number,
-  j: number,
-  listPositions: Position[]
+export const checkExistenceCoordinateChess = (
+  currentCoordinate: Coordinate,
+  destinationCoordinate: Coordinate | null
 ) => {
-  return listPositions?.some((pos) => pos[0] === i && pos[1] === j);
+  return (
+    currentCoordinate.x === destinationCoordinate?.x &&
+    currentCoordinate.y === destinationCoordinate?.y
+  );
 };
 
 export const initBoardGame = () => {
@@ -24,12 +26,27 @@ export const initBoardGame = () => {
     for (let j = 0; j < COLUMNS; j++) {
       const color = i <= 4 ? COLOR_CHESS.RED : COLOR_CHESS.BLUE;
       chessBoard[i][j] = {
-        isVisible: true,
-        isCapturned: false,
+        isVisible: listPositions[j].name !== "" ? true : false,
+        isCaptured: false,
         name: listPositions[j].name,
         color: color,
       };
     }
   }
   return chessBoard;
+};
+
+export const swapPositionChess = (
+  currentBoard: ChessPieceType[][],
+  sourceCoordinate: Coordinate,
+  targetCoordinate: Coordinate
+) => {
+  const updatedBoard = [...currentBoard];
+  const targetPiece = updatedBoard[targetCoordinate.x][targetCoordinate.y];
+  const sourcePiece = updatedBoard[sourceCoordinate.x][sourceCoordinate.y];
+
+  updatedBoard[targetCoordinate.x][targetCoordinate.y] = sourcePiece;
+  updatedBoard[sourceCoordinate.x][sourceCoordinate.y] = targetPiece;
+
+  return updatedBoard;
 };
