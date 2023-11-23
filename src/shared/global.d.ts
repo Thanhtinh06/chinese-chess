@@ -53,7 +53,7 @@ export interface ChessPieceType {
   name: string;
   color: string;
   location?: Coordinate;
-  isCapturned?: boolean;
+  isCaptured?: boolean;
   isVisible?: boolean;
   rule?: RuleChess;
   display?: string;
