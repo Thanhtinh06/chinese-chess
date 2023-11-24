@@ -4,11 +4,12 @@ import { Coordinate, RuleChess } from "../../global";
 type Props = {
   name: string;
   color: string;
-  location?: Coordinate;
+  location?: Coordinate | undefined;
   isCaptured?: boolean;
   isVisible: boolean;
   rule?: RuleChess;
   isSelected?: boolean;
+  isPromoted?: boolean;
 };
 
 const ChessPiece = (props: Props) => {
@@ -24,7 +25,7 @@ const ChessPiece = (props: Props) => {
         background: background,
       }}
     >
-      <p className={`text-${props.color}`}>{props.name}</p>
+      <p className="name-chess">{props.name}</p>
     </div>
   );
 };

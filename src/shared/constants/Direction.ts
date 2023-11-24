@@ -1,11 +1,11 @@
 import { Direction } from "../global";
 
 export const directionType: Direction = {
-  type: { 1: "straight", 2: "L", 3: "cross" },
+  type: { straight: "straight", L: "L", cross: "cross" },
   direct: {
-    1: "up",
-    2: "down",
-    3: "left",
-    4: "right",
+    up: "up",
+    down: "down",
+    left: "left",
+    right: "right",
   },
 };

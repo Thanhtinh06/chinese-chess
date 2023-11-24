@@ -36,8 +36,17 @@ export interface RuleChess {
 }
 
 export interface Direction {
-  type: object;
-  direct: object;
+  type: {
+    straight: string;
+    L: string;
+    cross: string;
+  };
+  direct: {
+    up: string;
+    down: string;
+    left: string;
+    right: string;
+  };
 }
 
 export interface Condition {
@@ -47,6 +56,7 @@ export interface Condition {
     direction: string[];
     scope: number;
   };
+  getListCoordinateCanMove: () => Coordinate[];
 }
 
 export interface ChessPieceType {
@@ -55,6 +65,7 @@ export interface ChessPieceType {
   location?: Coordinate;
   isCaptured?: boolean;
   isVisible?: boolean;
+  isPromoted?: boolean;
   rule?: RuleChess;
   display?: string;
   move?(): boolean;

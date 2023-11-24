@@ -1,35 +1,36 @@
 import { Piece } from "../global";
+import { NAME_CHESS_PIECE } from "./Chess";
 
 export const ROWS: number = 10;
 export const COLUMNS: number = 9;
 export const INITIAL_POSITIONS: Piece[][] = [
   [
     {
-      name: "Xe",
+      name: NAME_CHESS_PIECE.XE,
     },
     {
-      name: "Mã",
+      name: NAME_CHESS_PIECE.MA,
     },
     {
-      name: "Tượng",
+      name: NAME_CHESS_PIECE.TUONG,
     },
     {
-      name: "Sĩ",
+      name: NAME_CHESS_PIECE.SI,
     },
     {
-      name: "Tướng",
+      name: NAME_CHESS_PIECE.KING,
     },
     {
-      name: "Sĩ",
+      name: NAME_CHESS_PIECE.SI,
     },
     {
-      name: "Tượng",
+      name: NAME_CHESS_PIECE.TUONG,
     },
     {
-      name: "Mã",
+      name: NAME_CHESS_PIECE.MA,
     },
     {
-      name: "Xe",
+      name: NAME_CHESS_PIECE.XE,
     },
   ],
   [
@@ -45,36 +46,25 @@ export const INITIAL_POSITIONS: Piece[][] = [
   ],
   [
     { name: "" },
-    { name: "Pháo" },
+    { name: NAME_CHESS_PIECE.PHAO },
     { name: "" },
     { name: "" },
     { name: "" },
     { name: "" },
     { name: "" },
-    { name: "Pháo" },
+    { name: NAME_CHESS_PIECE.PHAO },
     { name: "" },
   ],
   [
-    { name: "Tốt" },
+    { name: NAME_CHESS_PIECE.TOT },
     { name: "" },
-    { name: "Tốt" },
+    { name: NAME_CHESS_PIECE.TOT },
     { name: "" },
-    { name: "Tốt" },
+    { name: NAME_CHESS_PIECE.TOT },
     { name: "" },
-    { name: "Tốt" },
+    { name: NAME_CHESS_PIECE.TOT },
     { name: "" },
-    { name: "Tốt" },
-  ],
-  [
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
+    { name: NAME_CHESS_PIECE.TOT },
   ],
   [
     { name: "" },
@@ -85,28 +75,6 @@ export const INITIAL_POSITIONS: Piece[][] = [
     { name: "" },
     { name: "" },
     { name: "" },
-    { name: "" },
-  ],
-  [
-    { name: "Tốt" },
-    { name: "" },
-    { name: "Tốt" },
-    { name: "" },
-    { name: "Tốt" },
-    { name: "" },
-    { name: "Tốt" },
-    { name: "" },
-    { name: "Tốt" },
-  ],
-  [
-    { name: "" },
-    { name: "Pháo" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "" },
-    { name: "Pháo" },
     { name: "" },
   ],
   [
@@ -121,32 +89,65 @@ export const INITIAL_POSITIONS: Piece[][] = [
     { name: "" },
   ],
   [
+    { name: NAME_CHESS_PIECE.TOT },
+    { name: "" },
+    { name: NAME_CHESS_PIECE.TOT },
+    { name: "" },
+    { name: NAME_CHESS_PIECE.TOT },
+    { name: "" },
+    { name: NAME_CHESS_PIECE.TOT },
+    { name: "" },
+    { name: NAME_CHESS_PIECE.TOT },
+  ],
+  [
+    { name: "" },
+    { name: NAME_CHESS_PIECE.PHAO },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: NAME_CHESS_PIECE.PHAO },
+    { name: "" },
+  ],
+  [
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+    { name: "" },
+  ],
+  [
     {
-      name: "Xe",
+      name: NAME_CHESS_PIECE.XE,
     },
     {
-      name: "Mã",
+      name: NAME_CHESS_PIECE.MA,
     },
     {
-      name: "Tượng",
+      name: NAME_CHESS_PIECE.TUONG,
     },
     {
-      name: "Sĩ",
+      name: NAME_CHESS_PIECE.SI,
     },
     {
-      name: "Tướng",
+      name: NAME_CHESS_PIECE.KING,
     },
     {
-      name: "Sĩ",
+      name: NAME_CHESS_PIECE.SI,
     },
     {
-      name: "Tượng",
+      name: NAME_CHESS_PIECE.TUONG,
     },
     {
-      name: "Mã",
+      name: NAME_CHESS_PIECE.MA,
     },
     {
-      name: "Xe",
+      name: NAME_CHESS_PIECE.XE,
     },
   ],
 ];

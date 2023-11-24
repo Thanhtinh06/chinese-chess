@@ -180,3 +180,6 @@ div.line:nth-child(69)::before {
   z-index: 10;
   display: block;
 }
+.name-chess {
+  font-size: 20px;
+}
