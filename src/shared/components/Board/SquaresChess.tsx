@@ -6,6 +6,7 @@ import {
   initBoardGame,
   swapPositionChess,
 } from "./index";
+import { getListCoordinateChessCanMove } from "../Chess";
 
 const SquaresChess = () => {
   const [selectedChessCoordinate, setSelectedChessCoordinate] =
@@ -13,6 +14,9 @@ const SquaresChess = () => {
   const [destinationCoordinate, setDestinationCoordinate] =
     useState<Coordinate | null>(null);
   const [board, setBoard] = useState<ChessPieceType[][]>([]);
+  const [coordinateListCanMove, setCoordinateListCanMove] = useState<
+    Coordinate[] | null
+  >(null);
 
   const resetSelection = (): void => {
     setSelectedChessCoordinate(null);
@@ -37,6 +41,16 @@ const SquaresChess = () => {
   }, [destinationCoordinate, selectedChessCoordinate]);
 
   const handleClick = (currentCoordinate: Coordinate): void => {
+    const currentChess = board[currentCoordinate.x][currentCoordinate.y];
+
+    const listCoordinateCanMove = getListCoordinateChessCanMove(
+      currentChess.name,
+      currentChess.color,
+      currentCoordinate,
+      currentChess.isPromoted
+    );
+    setCoordinateListCanMove(listCoordinateCanMove);
+
     const isEmptySpace =
       board[currentCoordinate.x][currentCoordinate.y].name === "" &&
       !selectedChessCoordinate;
@@ -47,15 +61,33 @@ const SquaresChess = () => {
 
     if (isUnselected) {
       setSelectedChessCoordinate(null);
+      setCoordinateListCanMove(null);
     } else if (isEmptySpace) {
       resetSelection();
     } else {
       if (!selectedChessCoordinate) {
         setSelectedChessCoordinate(currentCoordinate);
-      } else {
+      } else if (
+        coordinateListCanMove?.some((coordinate) => {
+          return checkExistenceCoordinateChess(currentCoordinate, coordinate);
+        })
+      ) {
         setDestinationCoordinate(currentCoordinate);
       }
     }
+  };
+
+  const conditionDisableChesses = (currentCoordinate: Coordinate) => {
+    if (
+      selectedChessCoordinate &&
+      !coordinateListCanMove?.some((coordinate) => {
+        return checkExistenceCoordinateChess(currentCoordinate, coordinate);
+      }) &&
+      !selectedChessCoordinate
+    ) {
+      return true;
+    }
+    return false;
   };
 
   return board.map((row, i) => {
@@ -65,13 +97,13 @@ const SquaresChess = () => {
         y: j,
       };
 
-      const isActiveMove = checkExistenceCoordinateChess(
-        currentCoordinate,
-        destinationCoordinate
-      );
+      const isActiveMove = coordinateListCanMove?.some((coordinate) => {
+        return checkExistenceCoordinateChess(currentCoordinate, coordinate);
+      });
 
       return (
         <button
+          disabled={conditionDisableChesses(currentCoordinate)}
           className={`btn-chess ${isActiveMove ? "active-select-move" : ""}`}
           key={j}
           onClick={() => handleClick(currentCoordinate)}
@@ -87,6 +119,7 @@ const SquaresChess = () => {
                 currentCoordinate,
                 selectedChessCoordinate
               )}
+              isPromoted={true}
             />
           )}
         </button>

@@ -30,6 +30,7 @@ export const initBoardGame = () => {
         isCaptured: false,
         name: listPositions[j].name,
         color: color,
+        isPromoted: false,
       };
     }
   }
