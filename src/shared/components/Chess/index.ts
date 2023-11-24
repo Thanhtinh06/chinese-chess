@@ -8,6 +8,10 @@ import { Coordinate } from "../../global";
 export const getCondition = (name: string) =>
   ConditionMovingChessPieces.filter((chess) => chess.name === name)[0];
 
+// export const promote = (chess: ChessPieceType, board: ChessPieceType[][]) => {
+//   if(chess.name)
+// };
+
 export const getListCoordinateChessCanMove = (
   name: string,
   color: string,

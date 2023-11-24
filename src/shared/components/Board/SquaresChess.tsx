@@ -21,6 +21,7 @@ const SquaresChess = () => {
   const resetSelection = (): void => {
     setSelectedChessCoordinate(null);
     setDestinationCoordinate(null);
+    setCoordinateListCanMove(null);
   };
 
   useEffect(() => {
@@ -43,14 +44,6 @@ const SquaresChess = () => {
   const handleClick = (currentCoordinate: Coordinate): void => {
     const currentChess = board[currentCoordinate.x][currentCoordinate.y];
 
-    const listCoordinateCanMove = getListCoordinateChessCanMove(
-      currentChess.name,
-      currentChess.color,
-      currentCoordinate,
-      currentChess.isPromoted
-    );
-    setCoordinateListCanMove(listCoordinateCanMove);
-
     const isEmptySpace =
       board[currentCoordinate.x][currentCoordinate.y].name === "" &&
       !selectedChessCoordinate;
@@ -67,6 +60,13 @@ const SquaresChess = () => {
     } else {
       if (!selectedChessCoordinate) {
         setSelectedChessCoordinate(currentCoordinate);
+        const listCoordinateCanMove = getListCoordinateChessCanMove(
+          currentChess.name,
+          currentChess.color,
+          currentCoordinate,
+          currentChess.isPromoted
+        );
+        setCoordinateListCanMove(listCoordinateCanMove);
       } else if (
         coordinateListCanMove?.some((coordinate) => {
           return checkExistenceCoordinateChess(currentCoordinate, coordinate);
@@ -83,7 +83,8 @@ const SquaresChess = () => {
       !coordinateListCanMove?.some((coordinate) => {
         return checkExistenceCoordinateChess(currentCoordinate, coordinate);
       }) &&
-      !selectedChessCoordinate
+      currentCoordinate.x !== selectedChessCoordinate?.x &&
+      currentCoordinate.y !== selectedChessCoordinate?.y
     ) {
       return true;
     }

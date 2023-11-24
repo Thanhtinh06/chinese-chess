@@ -6,9 +6,5 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/**/*.ts",
-    "vite.config.ts",
-    "src/shared/components/Board/BoardControll.tsx"
-  ]
+  "include": ["src/**/*.ts", "vite.config.ts"]
 }
