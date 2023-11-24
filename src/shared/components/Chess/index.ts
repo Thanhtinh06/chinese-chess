@@ -15,8 +15,8 @@ export const getListCoordinateChessCanMove = (
   isPromoted?: boolean
 ): Coordinate[] => {
   const resultCoordinate: Coordinate[] = [];
-  const rows = location.x;
-  const columns = location.y;
+  const rows = location?.x;
+  const columns = location?.y;
   const conditionChess = getCondition(name);
   switch (name) {
     case NAME_CHESS_PIECE.TOT:
