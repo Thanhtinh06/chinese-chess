@@ -3,35 +3,36 @@ import {
   ConditionMovingChessPieces,
   NAME_CHESS_PIECE,
 } from "../../constants/Chess";
-import { ChessPieceType, Coordinate } from "../../global";
+// import { ChessPieceType, Coordinate } from "../../global";
+import {  Coordinate } from "../../global";
 
 export const getCondition = (name: string) =>
   ConditionMovingChessPieces.filter((chess) => chess.name === name)[0];
 
-export const changeStatusPromote = (
-  chess: ChessPieceType,
-  board: ChessPieceType[][]
-) => {
-  const updateChessBoard = [...board];
-  if (
-    chess.color === COLOR_CHESS.RED &&
-    chess.location.x >= 5 &&
-    chess.name === NAME_CHESS_PIECE.TOT
-  ) {
-    chess.isPromoted = true;
-  }
+// export const changeStatusPromote = (
+//   chess: ChessPieceType,
+//   board: ChessPieceType[][]
+// ) => {
+//   const updateChessBoard = [...board];
+//   if (
+//     chess.color === COLOR_CHESS.RED &&
+//     chess.location.x >= 5 &&
+//     chess.name === NAME_CHESS_PIECE.TOT
+//   ) {
+//     chess.isPromoted = true;
+//   }
 
-  if (
-    chess.color === COLOR_CHESS.BLUE &&
-    chess.location.x <= 4 &&
-    chess.name === NAME_CHESS_PIECE.TOT
-  ) {
-    chess.isPromoted = true;
-  }
+//   if (
+//     chess.color === COLOR_CHESS.BLUE &&
+//     chess.location.x <= 4 &&
+//     chess.name === NAME_CHESS_PIECE.TOT
+//   ) {
+//     chess.isPromoted = true;
+//   }
 
-  updateChessBoard[chess.location.x][chess.location.y] = chess;
-  return updateChessBoard;
-};
+//   updateChessBoard[chess.location.x][chess.location.y] = chess;
+//   return updateChessBoard;
+// };
 
 
 export const getListCoordinateChessCanMove = (

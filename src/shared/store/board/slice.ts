@@ -27,12 +27,18 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
         state.boardGame = initBoardGame();
       },
       updateBoard: (state) => {
-        const updatedBoard = swapPositionChess(
-          state.boardGame,
-          state.selectedChessCoordinate,
+        if (
+          state.boardGame &&
+          state.selectedChessCoordinate &&
           state.destinationCoordinate
-        );
-        state.boardGame = updatedBoard;
+        ) {
+          const updatedBoard = swapPositionChess(
+            state.boardGame,
+            state.selectedChessCoordinate,
+            state.destinationCoordinate
+          );
+          state.boardGame = updatedBoard;
+        }
       },
       updateDestinationCoordinate: (
         state,
