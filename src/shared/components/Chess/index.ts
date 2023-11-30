@@ -3,37 +3,73 @@ import {
   ConditionMovingChessPieces,
   NAME_CHESS_PIECE,
 } from "../../constants/Chess";
-// import { ChessPieceType, Coordinate } from "../../global";
-import {  Coordinate } from "../../global";
+import { ChessPieceType, Coordinate } from "../../global";
 
 export const getCondition = (name: string) =>
   ConditionMovingChessPieces.filter((chess) => chess.name === name)[0];
 
-// export const changeStatusPromote = (
-//   chess: ChessPieceType,
-//   board: ChessPieceType[][]
-// ) => {
-//   const updateChessBoard = [...board];
-//   if (
-//     chess.color === COLOR_CHESS.RED &&
-//     chess.location.x >= 5 &&
-//     chess.name === NAME_CHESS_PIECE.TOT
-//   ) {
-//     chess.isPromoted = true;
-//   }
+export const getConditionPromotion = (
+  currentCoordinate: Coordinate,
+  board: ChessPieceType[][]
+) => {
+  const currentChess = board[currentCoordinate.x][currentCoordinate.y];
+  console.log("current Chess", currentChess);
+  if (
+    currentChess.name === NAME_CHESS_PIECE.TOT &&
+    currentChess.color === COLOR_CHESS.RED &&
+    currentCoordinate.x >= 5
+  ) {
+    return true;
+  }
+  if (
+    currentChess.color === COLOR_CHESS.BLUE &&
+    currentChess.location.x <= 4 &&
+    currentChess.name === NAME_CHESS_PIECE.TOT
+  ) {
+    return true;
+  }
+  return false;
+};
 
-//   if (
-//     chess.color === COLOR_CHESS.BLUE &&
-//     chess.location.x <= 4 &&
-//     chess.name === NAME_CHESS_PIECE.TOT
-//   ) {
-//     chess.isPromoted = true;
-//   }
+export const changeStatusPromote = (
+  chess: ChessPieceType,
+  board: ChessPieceType[][]
+) => {
+  const updateChessBoard = [...board];
+  if (
+    chess.color === COLOR_CHESS.RED &&
+    chess.location.x >= 5 &&
+    chess.name === NAME_CHESS_PIECE.TOT
+  ) {
+    chess.isPromoted = true;
+  }
 
-//   updateChessBoard[chess.location.x][chess.location.y] = chess;
-//   return updateChessBoard;
-// };
+  if (
+    chess.color === COLOR_CHESS.BLUE &&
+    chess.location.x <= 4 &&
+    chess.name === NAME_CHESS_PIECE.TOT
+  ) {
+    chess.isPromoted = true;
+  }
 
+  updateChessBoard[chess.location.x][chess.location.y] = chess;
+  return updateChessBoard;
+};
+
+export const listCapturedChess = (
+  chessPiece: ChessPieceType,
+  listCanMoveOfChess: Coordinate[],
+  board: ChessPieceType[][]
+): Coordinate[] => {
+  const listCaptured: Coordinate[] = [];
+  for (let chess of listCanMoveOfChess) {
+    const currentChess = board[chess.x][chess.y];
+    if (currentChess.name && currentChess.color !== chessPiece.color) {
+      listCaptured.push(chess);
+    }
+  }
+  return listCaptured;
+};
 
 export const getListCoordinateChessCanMove = (
   name: string,

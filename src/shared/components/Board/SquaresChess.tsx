@@ -11,6 +11,7 @@ const SquaresChess = () => {
     selectedChessCoordinate,
     destinationCoordinate,
     coordinateListCanMove,
+    listCapturedChess,
   } = useAppSelector((state) => state.board);
   const dispatch = useAppDispatch();
 
@@ -33,7 +34,6 @@ const SquaresChess = () => {
       currentCoordinate,
       selectedChessCoordinate
     );
-
     if (isUnselected) {
       dispatch(manageBoardsActions.unSelectChess());
     } else if (isEmptySpace) {
@@ -67,6 +67,15 @@ const SquaresChess = () => {
     return false;
   };
 
+  if (selectedChessCoordinate) {
+    console.log(
+      "selet",
+      boardGame[selectedChessCoordinate.x][selectedChessCoordinate.y]
+    );
+    console.log("listCapturedChess", listCapturedChess);
+    console.log("canmove", coordinateListCanMove);
+  }
+ 
   return boardGame?.map((row, i) => {
     return row.map((piece, j) => {
       const currentCoordinate: Coordinate = {

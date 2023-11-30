@@ -2,13 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ChessPieceType, Coordinate } from "../../global";
 import { initBoardGame, swapPositionChess } from "../../components/Board";
-import { getListCoordinateChessCanMove } from "../../components/Chess";
+import {
+  getListCoordinateChessCanMove,
+  listCapturedChess,
+} from "../../components/Chess";
 
 export interface ininialStateType {
   boardGame: ChessPieceType[][];
   selectedChessCoordinate: Coordinate | null;
   destinationCoordinate: Coordinate | null;
   coordinateListCanMove: Coordinate[] | null;
+  listCapturedChess: Coordinate[];
 }
 
 const initialState: ininialStateType = {
@@ -16,6 +20,7 @@ const initialState: ininialStateType = {
   selectedChessCoordinate: null,
   destinationCoordinate: null,
   coordinateListCanMove: null,
+  listCapturedChess: [],
 };
 
 export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
@@ -35,8 +40,10 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
           const updatedBoard = swapPositionChess(
             state.boardGame,
             state.selectedChessCoordinate,
-            state.destinationCoordinate
+            state.destinationCoordinate,
+            state.listCapturedChess
           );
+
           state.boardGame = updatedBoard;
         }
       },
@@ -50,6 +57,7 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
         state.destinationCoordinate = null;
         state.selectedChessCoordinate = null;
         state.coordinateListCanMove = null;
+        state.listCapturedChess = [];
       },
       unSelectChess: (state) => {
         state.selectedChessCoordinate = null;
@@ -66,6 +74,11 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
             currentChess.color,
             action.payload,
             currentChess.isPromoted
+          );
+          state.listCapturedChess = listCapturedChess(
+            currentChess,
+            state.coordinateListCanMove,
+            state.boardGame
           );
         } else {
           state.coordinateListCanMove = null;

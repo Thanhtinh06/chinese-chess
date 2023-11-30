@@ -5,6 +5,7 @@ import {
   ROWS,
 } from "../../constants/Board";
 import { ChessPieceType, Coordinate } from "../../global";
+import { changeStatusPromote, getConditionPromotion } from "../Chess";
 
 export const checkExistenceCoordinateChess = (
   currentCoordinate: Coordinate,
@@ -44,14 +45,76 @@ export const initBoardGame = () => {
 export const swapPositionChess = (
   currentBoard: ChessPieceType[][],
   sourceCoordinate: Coordinate,
-  targetCoordinate: Coordinate
+  targetCoordinate: Coordinate,
+  listCapturedChess: Coordinate[]
 ) => {
-  const updatedBoard = [...currentBoard];
-  const targetPiece = updatedBoard[targetCoordinate.x][targetCoordinate.y];
-  const sourcePiece = updatedBoard[sourceCoordinate.x][sourceCoordinate.y];
+  // Check if coordinates are valid
+  if (
+    !isValidCoordinate(sourceCoordinate, currentBoard) ||
+    !isValidCoordinate(targetCoordinate, currentBoard)
+  ) {
+    throw new Error("Invalid coordinates");
+  }
 
-  updatedBoard[targetCoordinate.x][targetCoordinate.y] = sourcePiece;
-  updatedBoard[sourceCoordinate.x][sourceCoordinate.y] = targetPiece;
+  // Deep copy of the board
+  let updatedBoard = currentBoard.map((row) => [...row]);
+
+  // Destructuring for swapping
+  [
+    updatedBoard[targetCoordinate.x][targetCoordinate.y],
+    updatedBoard[sourceCoordinate.x][sourceCoordinate.y],
+  ] = [
+    updatedBoard[sourceCoordinate.x][sourceCoordinate.y],
+    updatedBoard[targetCoordinate.x][targetCoordinate.y],
+  ];
+  const conditonCapture = listCapturedChess.some(
+    (coordinate) =>
+      coordinate.x === targetCoordinate.x && coordinate.y === targetCoordinate.y
+  );
+
+  if (conditonCapture) {
+    [
+      updatedBoard[targetCoordinate.x][targetCoordinate.y].isCaptured,
+      updatedBoard[sourceCoordinate.x][sourceCoordinate.y].isCaptured,
+    ] = [false, true];
+    [
+      updatedBoard[targetCoordinate.x][targetCoordinate.y].isVisible,
+      updatedBoard[sourceCoordinate.x][sourceCoordinate.y].isVisible,
+    ] = [true, false];
+  }
+
+  // Swap piece locations
+  [
+    updatedBoard[targetCoordinate.x][targetCoordinate.y].location,
+    updatedBoard[sourceCoordinate.x][sourceCoordinate.y].location,
+  ] = [
+    updatedBoard[sourceCoordinate.x][sourceCoordinate.y].location,
+    updatedBoard[targetCoordinate.x][targetCoordinate.y].location,
+  ];
+
+  // Update status isPromoted of Tot chess
+
+  if (
+    updatedBoard[targetCoordinate.x][targetCoordinate.y].location &&
+    getConditionPromotion(
+      updatedBoard[targetCoordinate.x][targetCoordinate.y].location,
+      updatedBoard
+    )
+  ) {
+    updatedBoard = changeStatusPromote(
+      updatedBoard[targetCoordinate.x][targetCoordinate.y],
+      updatedBoard
+    );
+  }
 
   return updatedBoard;
 };
+
+const isValidCoordinate = (
+  coordinate: Coordinate,
+  board: ChessPieceType[][]
+) => {
+  const { x, y } = coordinate;
+  return x >= 0 && x < board.length && y >= 0 && y < board[0].length;
+};
+
