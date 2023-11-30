@@ -31,6 +31,10 @@ export const initBoardGame = () => {
         name: listPositions[j].name,
         color: color,
         isPromoted: false,
+        location: {
+          x: i,
+          y: j,
+        },
       };
     }
   }

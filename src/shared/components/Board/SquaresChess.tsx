@@ -1,51 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ChessPiece from "../Chess/ChessPiece";
-import { ChessPieceType, Coordinate } from "./../../global";
-import {
-  checkExistenceCoordinateChess,
-  initBoardGame,
-  swapPositionChess,
-} from "./index";
-import { getListCoordinateChessCanMove } from "../Chess";
+import { Coordinate } from "../../global";
+import { checkExistenceCoordinateChess } from "./index";
+import { useAppDispatch, useAppSelector } from "../../hooks/index";
+import { manageBoardsActions } from "../../store/board/slice";
 
 const SquaresChess = () => {
-  const [selectedChessCoordinate, setSelectedChessCoordinate] =
-    useState<Coordinate | null>(null);
-  const [destinationCoordinate, setDestinationCoordinate] =
-    useState<Coordinate | null>(null);
-  const [board, setBoard] = useState<ChessPieceType[][]>([]);
-  const [coordinateListCanMove, setCoordinateListCanMove] = useState<
-    Coordinate[] | null
-  >(null);
-
-  const resetSelection = (): void => {
-    setSelectedChessCoordinate(null);
-    setDestinationCoordinate(null);
-    setCoordinateListCanMove(null);
-  };
+  const {
+    boardGame,
+    selectedChessCoordinate,
+    destinationCoordinate,
+    coordinateListCanMove,
+  } = useAppSelector((state) => state.board);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const initialBoard = initBoardGame();
-    setBoard(initialBoard);
-  }, []);
+    dispatch(manageBoardsActions.initValue());
+  }, [dispatch]);
 
   useEffect(() => {
     if (destinationCoordinate && selectedChessCoordinate) {
-      const updatedBoard = swapPositionChess(
-        board,
-        selectedChessCoordinate,
-        destinationCoordinate
-      );
-      setBoard(updatedBoard);
-      resetSelection();
+      dispatch(manageBoardsActions.updateBoard());
+      dispatch(manageBoardsActions.resetSelection());
     }
   }, [destinationCoordinate, selectedChessCoordinate]);
 
   const handleClick = (currentCoordinate: Coordinate): void => {
-    const currentChess = board[currentCoordinate.x][currentCoordinate.y];
-
     const isEmptySpace =
-      board[currentCoordinate.x][currentCoordinate.y].name === "" &&
+      boardGame[currentCoordinate.x][currentCoordinate.y].name === "" &&
       !selectedChessCoordinate;
     const isUnselected = checkExistenceCoordinateChess(
       currentCoordinate,
@@ -53,26 +35,20 @@ const SquaresChess = () => {
     );
 
     if (isUnselected) {
-      setSelectedChessCoordinate(null);
-      setCoordinateListCanMove(null);
+      dispatch(manageBoardsActions.unSelectChess());
     } else if (isEmptySpace) {
-      resetSelection();
+      dispatch(manageBoardsActions.resetSelection());
     } else {
       if (!selectedChessCoordinate) {
-        setSelectedChessCoordinate(currentCoordinate);
-        const listCoordinateCanMove = getListCoordinateChessCanMove(
-          currentChess.name,
-          currentChess.color,
-          currentCoordinate,
-          currentChess.isPromoted
-        );
-        setCoordinateListCanMove(listCoordinateCanMove);
+        dispatch(manageBoardsActions.selectChess(currentCoordinate));
       } else if (
         coordinateListCanMove?.some((coordinate) => {
           return checkExistenceCoordinateChess(currentCoordinate, coordinate);
         })
       ) {
-        setDestinationCoordinate(currentCoordinate);
+        dispatch(
+          manageBoardsActions.updateDestinationCoordinate(currentCoordinate)
+        );
       }
     }
   };
@@ -91,7 +67,7 @@ const SquaresChess = () => {
     return false;
   };
 
-  return board.map((row, i) => {
+  return boardGame?.map((row, i) => {
     return row.map((piece, j) => {
       const currentCoordinate: Coordinate = {
         x: i,
