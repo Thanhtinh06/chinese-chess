@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ChessPieceType, Coordinate } from "../../global";
 import { initBoardGame, swapPositionChess } from "../../components/Board";
 import {
+  checkTheSameColorInListCanMove,
   getListCoordinateChessCanMove,
   listCapturedChess,
 } from "../../components/Chess";
@@ -75,6 +76,14 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
             action.payload,
             currentChess.isPromoted
           );
+
+          let listCanMove = [...state.coordinateListCanMove];
+          listCanMove = checkTheSameColorInListCanMove(
+            currentChess,
+            listCanMove,
+            state.boardGame
+          );
+          state.coordinateListCanMove = listCanMove;
           state.listCapturedChess = listCapturedChess(
             currentChess,
             state.coordinateListCanMove,

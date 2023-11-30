@@ -71,6 +71,19 @@ export const listCapturedChess = (
   return listCaptured;
 };
 
+export const checkTheSameColorInListCanMove = (
+  chessPiece: ChessPieceType,
+  listCanMoveOfChess: Coordinate[],
+  board: ChessPieceType[][]
+): Coordinate[] => {
+  return listCanMoveOfChess.filter((chess) => {
+    const currentChess = board[chess.x][chess.y];
+    return (
+      !currentChess.name || currentChess.color !== chessPiece.color || undefined
+    );
+  });
+};
+
 export const getListCoordinateChessCanMove = (
   name: string,
   color: string,
@@ -97,15 +110,19 @@ export const getListCoordinateChessCanMove = (
               });
             }
           }
-          resultCoordinate.push({
-            x: rows + 1,
-            y: columns,
-          });
+          if (rows <= 8) {
+            resultCoordinate.push({
+              x: rows + 1,
+              y: columns,
+            });
+          }
         } else {
-          resultCoordinate.push({
-            x: rows + 1,
-            y: columns,
-          });
+          if (rows <= 7) {
+            resultCoordinate.push({
+              x: rows + 1,
+              y: columns,
+            });
+          }
         }
       }
 
@@ -123,17 +140,22 @@ export const getListCoordinateChessCanMove = (
               });
             }
           }
-          resultCoordinate.push({
-            x: rows - 1,
-            y: columns,
-          });
+          if (rows >= 1) {
+            resultCoordinate.push({
+              x: rows - 1,
+              y: columns,
+            });
+          }
         } else {
-          resultCoordinate.push({
-            x: rows - 1,
-            y: columns,
-          });
+          if (rows >= 1) {
+            resultCoordinate.push({
+              x: rows - 1,
+              y: columns,
+            });
+          }
         }
       }
+
       return resultCoordinate;
 
     default:
