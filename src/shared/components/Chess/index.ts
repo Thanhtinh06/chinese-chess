@@ -9,24 +9,25 @@ export const getCondition = (name: string) =>
   ConditionMovingChessPieces.filter((chess) => chess.name === name)[0];
 
 export const getConditionPromotion = (
-  currentCoordinate: Coordinate,
-  board: ChessPieceType[][]
+  currentCoordinate?: Coordinate,
+  board?: ChessPieceType[][]
 ) => {
-  const currentChess = board[currentCoordinate.x][currentCoordinate.y];
-  console.log("current Chess", currentChess);
-  if (
-    currentChess.name === NAME_CHESS_PIECE.TOT &&
-    currentChess.color === COLOR_CHESS.RED &&
-    currentCoordinate.x >= 5
-  ) {
-    return true;
-  }
-  if (
-    currentChess.color === COLOR_CHESS.BLUE &&
-    currentChess.location.x <= 4 &&
-    currentChess.name === NAME_CHESS_PIECE.TOT
-  ) {
-    return true;
+  if (currentCoordinate && board) {
+    const currentChess = board[currentCoordinate.x][currentCoordinate.y];
+    if (
+      currentChess.name === NAME_CHESS_PIECE.TOT &&
+      currentChess.color === COLOR_CHESS.RED &&
+      currentCoordinate.x >= 5
+    ) {
+      return true;
+    }
+    if (
+      currentChess.color === COLOR_CHESS.BLUE &&
+      currentCoordinate.x <= 4 &&
+      currentChess.name === NAME_CHESS_PIECE.TOT
+    ) {
+      return true;
+    }
   }
   return false;
 };
@@ -36,23 +37,25 @@ export const changeStatusPromote = (
   board: ChessPieceType[][]
 ) => {
   const updateChessBoard = [...board];
-  if (
-    chess.color === COLOR_CHESS.RED &&
-    chess.location.x >= 5 &&
-    chess.name === NAME_CHESS_PIECE.TOT
-  ) {
-    chess.isPromoted = true;
+  if (chess.location) {
+    if (
+      chess.color === COLOR_CHESS.RED &&
+      chess.location.x >= 5 &&
+      chess.name === NAME_CHESS_PIECE.TOT
+    ) {
+      chess.isPromoted = true;
+    }
+
+    if (
+      chess.color === COLOR_CHESS.BLUE &&
+      chess.location.x <= 4 &&
+      chess.name === NAME_CHESS_PIECE.TOT
+    ) {
+      chess.isPromoted = true;
+    }
+    updateChessBoard[chess.location.x][chess.location.y] = chess;
   }
 
-  if (
-    chess.color === COLOR_CHESS.BLUE &&
-    chess.location.x <= 4 &&
-    chess.name === NAME_CHESS_PIECE.TOT
-  ) {
-    chess.isPromoted = true;
-  }
-
-  updateChessBoard[chess.location.x][chess.location.y] = chess;
   return updateChessBoard;
 };
 
@@ -69,6 +72,19 @@ export const listCapturedChess = (
     }
   }
   return listCaptured;
+};
+
+export const checkTheSameColorInListCanMove = (
+  chessPiece: ChessPieceType,
+  listCanMoveOfChess: Coordinate[],
+  board: ChessPieceType[][]
+): Coordinate[] => {
+  return listCanMoveOfChess.filter((chess) => {
+    const currentChess = board[chess.x][chess.y];
+    return (
+      !currentChess.name || currentChess.color !== chessPiece.color || undefined
+    );
+  });
 };
 
 export const getListCoordinateChessCanMove = (
@@ -97,15 +113,19 @@ export const getListCoordinateChessCanMove = (
               });
             }
           }
-          resultCoordinate.push({
-            x: rows + 1,
-            y: columns,
-          });
+          if (rows <= 8) {
+            resultCoordinate.push({
+              x: rows + 1,
+              y: columns,
+            });
+          }
         } else {
-          resultCoordinate.push({
-            x: rows + 1,
-            y: columns,
-          });
+          if (rows <= 7) {
+            resultCoordinate.push({
+              x: rows + 1,
+              y: columns,
+            });
+          }
         }
       }
 
@@ -123,17 +143,22 @@ export const getListCoordinateChessCanMove = (
               });
             }
           }
-          resultCoordinate.push({
-            x: rows - 1,
-            y: columns,
-          });
+          if (rows >= 1) {
+            resultCoordinate.push({
+              x: rows - 1,
+              y: columns,
+            });
+          }
         } else {
-          resultCoordinate.push({
-            x: rows - 1,
-            y: columns,
-          });
+          if (rows >= 1) {
+            resultCoordinate.push({
+              x: rows - 1,
+              y: columns,
+            });
+          }
         }
       }
+
       return resultCoordinate;
 
     default:
