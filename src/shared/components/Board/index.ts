@@ -81,6 +81,9 @@ export const swapPositionChess = (
       updatedBoard[targetCoordinate.x][targetCoordinate.y].isVisible,
       updatedBoard[sourceCoordinate.x][sourceCoordinate.y].isVisible,
     ] = [true, false];
+  
+      updatedBoard[sourceCoordinate.x][sourceCoordinate.y].name = "";
+      updatedBoard[sourceCoordinate.x][sourceCoordinate.y].color = "";
   }
 
   // Swap piece locations

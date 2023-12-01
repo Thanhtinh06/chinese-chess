@@ -74,6 +74,7 @@ export const { reducer: manageBoardsReducer, actions: manageBoardsActions } =
             currentChess.name,
             currentChess.color,
             action.payload,
+            state.boardGame,
             currentChess.isPromoted
           );
 
