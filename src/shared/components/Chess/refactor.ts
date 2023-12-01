@@ -96,7 +96,7 @@ export default class ChessPieceController {
             addCoordinate(-1);
           }
         } else {
-          if (this.chess.color === COLOR_CHESS.RED && rows <= 7) {
+          if (this.chess.color === COLOR_CHESS.RED && rows <= 8) {
             addCoordinate(1);
           }
 
