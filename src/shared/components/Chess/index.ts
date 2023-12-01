@@ -91,6 +91,7 @@ export const getListCoordinateChessCanMove = (
   name: string,
   color: string,
   location: Coordinate,
+  board: ChessPieceType[][],
   isPromoted?: boolean
 ): Coordinate[] => {
   const resultCoordinate: Coordinate[] = [];
@@ -128,7 +129,6 @@ export const getListCoordinateChessCanMove = (
           }
         }
       }
-
       if (color === COLOR_CHESS.BLUE) {
         if (isPromoted) {
           for (
@@ -159,7 +159,94 @@ export const getListCoordinateChessCanMove = (
         }
       }
       return resultCoordinate;
+    case NAME_CHESS_PIECE.PHAO:
+      for (let i = columns - 1; i >= 0; i--) {
+        if (board[rows][i].name) {
+          for (let j = i - 1; j >= 0; j--) {
+            if (board[rows][j].name && board[rows][j].color !== color) {
+              resultCoordinate.push({
+                x: rows,
+                y: j,
+              });
+              break;
+            }
+            if (board[rows][j].name) {
+              break;
+            }
+          }
+          break;
+        }
+        resultCoordinate.push({
+          x: rows,
+          y: i,
+        });
+      }
+      for (let i = columns + 1; i < 9; i++) {
+        if (board[rows][i].name) {
+          for (let j = i + 1; j < 9; j++) {
+            if (board[rows][j].name && board[rows][j].color !== color) {
+              resultCoordinate.push({
+                x: rows,
+                y: j,
+              });
+              break;
+            }
+            if (board[rows][j].name) {
+              break;
+            }
+          }
+          break;
+        }
+        resultCoordinate.push({
+          x: rows,
+          y: i,
+        });
+      }
+      for (let i = rows - 1; i >= 0; i--) {
+        if (board[i][columns].name) {
+          for (let j = i - 1; j >= 0; j--) {
+            if (board[j][columns].name && board[j][columns].color !== color) {
+              resultCoordinate.push({
+                x: j,
+                y: columns,
+              });
+              break;
+            }
+            if (board[j][columns].name) {
+              break;
+            }
+          }
+          break;
+        }
+        resultCoordinate.push({
+          x: i,
+          y: columns,
+        });
+      }
+      for (let i = rows + 1; i < 10; i++) {
+        if (board[i][columns].name) {
+          for (let j = i + 1; j < 10; j++) {
+            if (board[j][columns].name && board[j][columns].color !== color) {
+              resultCoordinate.push({
+                x: j,
+                y: columns,
+              });
+              break;
+            }
+            if (board[j][columns].name) {
+              break;
+            }
+          }
+          break;
+        }
+        resultCoordinate.push({
+          x: i,
+          y: columns,
+        });
+      }
+      return resultCoordinate;
     default:
       return [];
   }
 };
+
