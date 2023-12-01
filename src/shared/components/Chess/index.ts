@@ -120,7 +120,7 @@ export const getListCoordinateChessCanMove = (
             });
           }
         } else {
-          if (rows <= 7) {
+          if (rows <= 8) {
             resultCoordinate.push({
               x: rows + 1,
               y: columns,
@@ -158,9 +158,7 @@ export const getListCoordinateChessCanMove = (
           }
         }
       }
-
       return resultCoordinate;
-
     default:
       return [];
   }
