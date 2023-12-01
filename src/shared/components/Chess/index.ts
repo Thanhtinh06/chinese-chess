@@ -162,7 +162,6 @@ export const getListCoordinateChessCanMove = (
     case NAME_CHESS_PIECE.PHAO:
       for (let i = columns - 1; i >= 0; i--) {
         if (board[rows][i].name) {
-          let counter = 0;
           for (let j = i - 1; j >= 0; j--) {
             if (board[rows][j].name && board[rows][j].color !== color) {
               resultCoordinate.push({
